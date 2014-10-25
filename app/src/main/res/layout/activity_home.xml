@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_texture">
+
+    <ImageButton
+        android:id="@+id/button_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/selector_rank_icon"/>
+
+    <ImageButton
+        android:id="@+id/button_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/button_rank"
+        android:src="@drawable/selector_profile_icon"/>
+
+    <ImageButton
+        android:id="@+id/button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/button_profile"
+        android:src="@drawable/selector_submit_icon"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/listFragment"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            class="topcom.perguntaae.QuestionListFragment"
+            tools:layout="@layout/fragment_question_list">
+        </fragment>
+
+        <fragment
+            android:id="@+id/previewFragment"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            class="topcom.perguntaae.QuestionPreviewFragment"
+            tools:layout="@layout/fragment_question_preview">
+        </fragment>
+    </LinearLayout>
+
+
+</RelativeLayout>

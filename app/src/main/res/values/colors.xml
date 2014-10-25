@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="transparent">#00ffffff</drawable>
+    <drawable name="tableRowEven">#ffffffff</drawable>
+    <drawable name="tableRowOdd">#ffd1d5d3</drawable>
+</resources>
