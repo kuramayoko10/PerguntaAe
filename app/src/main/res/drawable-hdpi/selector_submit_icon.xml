@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true"
-        android:drawable="@drawable/ic_submit_question_pressed" />
-    <item android:state_focused="true"
-        android:drawable="@drawable/ic_submit_question" />
-    <item android:drawable="@drawable/ic_submit_question" /> <!-- default... will only be evaluated after the other two -->
-</selector>
