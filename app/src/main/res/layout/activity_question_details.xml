@@ -12,30 +12,33 @@
         android:id="@+id/question_layout">
 
         <TextView
+            android:id="@+id/textQuestTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:text="Question Title"
-            android:textSize="10pt"
+            android:textSize="6pt"
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/textQuestContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
             android:text="Question content"
-            android:textSize="8pt"/>
+            android:textSize="5pt"/>
 
         <TextView
+            android:id="@+id/textQuestAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:gravity="right"
             android:text="User who asked"
-            android:textSize="6pt"/>
+            android:textSize="4pt"/>
     </LinearLayout>
 
     <LinearLayout
@@ -45,21 +48,23 @@
         android:id="@+id/answer_layout">
 
         <TextView
+            android:id="@+id/textAnsContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="15dp"
             android:text="Answer content"
-            android:textSize="8pt"/>
+            android:textSize="5pt"/>
 
         <TextView
+            android:id="@+id/textAnsUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:gravity="right"
             android:text="User who answered"
-            android:textSize="6pt"/>
+            android:textSize="4pt"/>
     </LinearLayout>
 
     <LinearLayout
@@ -74,7 +79,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginLeft="15dp"
             android:text="Your answer"
-            android:textSize="8pt"/>
+            android:textSize="5pt"/>
 
         <EditText
             android:layout_width="match_parent"

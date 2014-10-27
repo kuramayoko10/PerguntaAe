@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <drawable name="transparent">#00ffffff</drawable>
-    <drawable name="tableRowEven">#ffffffff</drawable>
-    <drawable name="tableRowOdd">#ffd1d5d3</drawable>
+    <drawable name="evenColor">#ffffffff</drawable>
+    <drawable name="oddColor">#ffecf0ee</drawable>
+    <color name="odd_row_color">#C0C0C0</color>
+    <color name="even_row_color">#FFFFFF</color>
 </resources>

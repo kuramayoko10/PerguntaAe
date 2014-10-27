@@ -4,7 +4,7 @@
     <item android:state_selected="true"
         android:drawable="@drawable/transparent"/>
     <item android:state_selected="false"
-        android:drawable="@drawable/tableRowOdd"/>
+        android:drawable="@drawable/oddColor"/>
     <item android:state_pressed="true"
         android:drawable="@drawable/transparent"/>
 </selector>

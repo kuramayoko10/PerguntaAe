@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="0"
+        android:textSize="6pt"
+        android:textStyle="bold"
+        android:textColor="#008000"/>
+
+    <TextView
+        android:id="@+id/textQuestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textScore"
+        android:layout_marginLeft="10dp"
+        android:text="Title"
+        android:textSize="6pt"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/textCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentRight="true"
+        android:text="Category"
+        android:textSize="4pt"
+        android:textStyle="italic"
+        android:textColor="#008000"/>
+
+</RelativeLayout>

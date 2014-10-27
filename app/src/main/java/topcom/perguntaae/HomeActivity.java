@@ -52,22 +52,24 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
     }
 
     @Override
-    public void OnTableRowSelected(String title, String content, String author)
+    public void OnTableRowSelected(int index)
     {
         QuestionPreviewFragment fragment = (QuestionPreviewFragment)getFragmentManager().findFragmentById(R.id.previewFragment);
+        Question selected = questionBank.get(index);
 
         if(fragment != null && fragment.isInLayout())   //Landscape mode
         {
-            fragment.setTitle("Titulo");
-            fragment.setContent("Conteudo");
-            fragment.setUser("Usuario");
+            fragment.setTitle(selected.getTitle());
+            fragment.setContent(selected.getContent());
+            fragment.setUser(selected.getAuthor());
         }
         else //Portrait mode
         {
             Intent intent = new Intent(getApplicationContext(), QuestionDetailsActivity.class);
-            String[] contentArray = {"Titulo", "Conteudo", "Usuario"};
+            String[] contentArray = {selected.getTitle(), selected.getContent(), selected.getAuthor()};
 
-            intent.putExtra("question_preview", contentArray);
+            intent.putExtra("question_details", contentArray);
+            //answer_details
             startActivity(intent);
         }
     }

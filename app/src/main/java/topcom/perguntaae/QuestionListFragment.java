@@ -25,12 +25,20 @@ public class QuestionListFragment extends Fragment
 
     public interface OnItemSelectedListener
     {
-        public void OnTableRowSelected(String title, String content, String author);
+        public void OnTableRowSelected(int index);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question_list, container, false);
+
+        ListView list = (ListView)view.findViewById(R.id.listTable);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listener.OnTableRowSelected(i);
+            }
+        });
 
         return view;
     }
@@ -56,9 +64,9 @@ public class QuestionListFragment extends Fragment
         AssetManager assets = getActivity().getAssets();
         String[] files = null, sections = null;
         String fileContent;
-        ArrayList<String> questionList = new ArrayList<String>();
+        ArrayList<Question> questionList = new ArrayList<Question>();
         ListView table = (ListView)getView().findViewById(R.id.listTable);
-        ArrayAdapter<String> itemAdapter;
+        ArrayAdapter<Question> itemAdapter;
 
         try {
             files = assets.list("questions");  //Read files from assets/questions dir
@@ -85,21 +93,24 @@ public class QuestionListFragment extends Fragment
                 fileContent = new String(buffer);
                 sections = fileContent.split("_pa_section_");
 
-                if(sections.length == 3) {
-                    q = new Question(sections[0], sections[1], sections[2]);
+                for(int k = 0; k < sections.length; k++)
+                    sections[k] = sections[k].replaceAll(System.getProperty("line.separator"), "");
+
+                if(sections.length > 0) {
+                    q = new Question(sections[0], sections[1], sections[2], sections[3], Integer.parseInt(sections[4]));
                     ((HomeActivity)getActivity()).addQuestionToBank(q);
-                    questionList.add(sections[0]);
+                    questionList.add(q);
                 }
                 else
                     throw new IOException("Cannot find three sections on question read");
             }
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         //Notify only once after every question has been read
-        itemAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, questionList);
+        itemAdapter = new SpecialArrayAdapter(getActivity().getApplicationContext(), questionList);
         table.setAdapter(itemAdapter);
         itemAdapter.notifyDataSetChanged();
     }

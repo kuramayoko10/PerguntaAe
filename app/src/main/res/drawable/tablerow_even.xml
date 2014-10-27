@@ -4,7 +4,7 @@
     <item android:state_selected="true"
         android:drawable="@drawable/transparent"/>
     <item android:state_selected="false"
-        android:drawable="@drawable/tableRowEven"/>
+        android:drawable="@drawable/evenColor"/>
     <item android:state_pressed="true"
         android:drawable="@drawable/transparent"/>
 </selector>

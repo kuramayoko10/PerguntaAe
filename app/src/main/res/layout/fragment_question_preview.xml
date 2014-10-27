@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
-        android:text="Question Title"
-        android:textSize="10pt"
+        android:textSize="6pt"
         android:textStyle="bold"/>
+    <!--android:text="Question Title"-->
 
     <TextView
         android:id="@+id/textContent"
@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="15dp"
-        android:text="Question content"
-        android:textSize="8pt"/>
+        android:textSize="5pt"/>
+    <!--android:text="Question Content"-->
 
     <TextView
         android:id="@+id/textUser"
@@ -32,7 +32,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
         android:gravity="right"
-        android:text="User who asked"
-        android:textSize="6pt"/>
+        android:textSize="4pt"/>
+    <!--android:text="Author"-->
 
 </LinearLayout>
