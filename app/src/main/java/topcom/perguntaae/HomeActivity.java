@@ -1,21 +1,32 @@
 package topcom.perguntaae;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 
+import java.util.ArrayList;
+
 
 public class HomeActivity extends Activity implements QuestionListFragment.OnItemSelectedListener
 {
+    private ArrayList<Question> questionBank = new ArrayList<Question>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        QuestionListFragment fragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.listFragment);
+
+        if(fragment != null && fragment.isInLayout()) //Safety check
+        {
+            fragment.setupView();
+        }
     }
 
 
@@ -59,5 +70,15 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
             intent.putExtra("question_preview", contentArray);
             startActivity(intent);
         }
+    }
+
+    public void addQuestionToBank(Question q)
+    {
+        questionBank.add(q);
+    }
+
+    public Question getQuestionByIndex(int i)
+    {
+        return questionBank.get(i);
     }
 }
