@@ -32,6 +32,7 @@ public class SpecialArrayAdapter extends ArrayAdapter<Question>
     {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.layout_tablerow, container, false);
+
         TextView textTitle = (TextView)view.findViewById(R.id.textQuestTitle);
         TextView textCategory = (TextView)view.findViewById(R.id.textCategory);
         TextView textScore = (TextView)view.findViewById(R.id.textScore);

@@ -10,7 +10,8 @@
 
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +21,14 @@
 
         <activity
             android:name=".QuestionDetailsActivity"
-            android:label="Question">
+            android:label="Question"
+            android:parentActivityName=".HomeActivity">
+        </activity>
+
+        <activity
+            android:name=".SubmitQuestionActivity"
+            android:label="Question"
+            android:parentActivityName=".HomeActivity">
         </activity>
 
     </application>

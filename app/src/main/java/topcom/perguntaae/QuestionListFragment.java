@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 public class QuestionListFragment extends Fragment
 {
     private OnItemSelectedListener listener;
+    private ArrayList<Question> questionList;
+    private ArrayAdapter<Question> itemAdapter;
 
     public interface OnItemSelectedListener
     {
@@ -51,6 +54,7 @@ public class QuestionListFragment extends Fragment
         if(activity instanceof OnItemSelectedListener)
         {
             listener = (OnItemSelectedListener) activity;
+            questionList = ((HomeActivity)activity).getQuestionBank();
         }
         else
         {
@@ -64,9 +68,8 @@ public class QuestionListFragment extends Fragment
         AssetManager assets = getActivity().getAssets();
         String[] files = null, sections = null;
         String fileContent;
-        ArrayList<Question> questionList = new ArrayList<Question>();
+
         ListView table = (ListView)getView().findViewById(R.id.listTable);
-        ArrayAdapter<Question> itemAdapter;
 
         try {
             files = assets.list("questions");  //Read files from assets/questions dir
@@ -96,9 +99,9 @@ public class QuestionListFragment extends Fragment
                 for(int k = 0; k < sections.length; k++)
                     sections[k] = sections[k].replaceAll(System.getProperty("line.separator"), "");
 
-                if(sections.length > 0) {
+                if(sections.length > 0)
+                {
                     q = new Question(sections[0], sections[1], sections[2], sections[3], Integer.parseInt(sections[4]));
-                    ((HomeActivity)getActivity()).addQuestionToBank(q);
                     questionList.add(q);
                 }
                 else
@@ -112,6 +115,11 @@ public class QuestionListFragment extends Fragment
         //Notify only once after every question has been read
         itemAdapter = new SpecialArrayAdapter(getActivity().getApplicationContext(), questionList);
         table.setAdapter(itemAdapter);
+        itemAdapter.notifyDataSetChanged();
+    }
+
+    public void refreshList()
+    {
         itemAdapter.notifyDataSetChanged();
     }
 }

@@ -2,18 +2,25 @@ package topcom.perguntaae;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
 
-public class HomeActivity extends Activity implements QuestionListFragment.OnItemSelectedListener
+public class HomeActivity extends Activity implements QuestionListFragment.OnItemSelectedListener, ImageButton.OnClickListener
 {
     private ArrayList<Question> questionBank = new ArrayList<Question>();
+    public static Activity activity;
+
+    private FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,12 +28,20 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        activity = this;
+        ft = getFragmentManager().beginTransaction();
+
         QuestionListFragment fragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.listFragment);
 
         if(fragment != null && fragment.isInLayout()) //Safety check
         {
             fragment.setupView();
+            ft.add(R.id.listFragment, fragment);
+            ft.commit();
         }
+
+        ImageButton buttonSubmit = (ImageButton)findViewById(R.id.button_submit);
+        buttonSubmit.setOnClickListener(this);
     }
 
 
@@ -66,10 +81,7 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
         else //Portrait mode
         {
             Intent intent = new Intent(getApplicationContext(), QuestionDetailsActivity.class);
-            String[] contentArray = {selected.getTitle(), selected.getContent(), selected.getAuthor()};
-
-            intent.putExtra("question_details", contentArray);
-            //answer_details
+            intent.putExtra("idx", Integer.valueOf(index));
             startActivity(intent);
         }
     }
@@ -79,8 +91,34 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
         questionBank.add(q);
     }
 
+    public ArrayList<Question> getQuestionBank()    { return questionBank; }
+
+    public void addAnswerToQuestion(int index, Answer a)
+    {
+        questionBank.get(index).addAnswer(a);
+    }
+
     public Question getQuestionByIndex(int i)
     {
         return questionBank.get(i);
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(), SubmitQuestionActivity.class);
+        startActivity(intent);
+    }
+
+    public void refresh()
+    {
+        QuestionListFragment fragment = (QuestionListFragment) getFragmentManager().findFragmentById(R.id.listFragment);
+
+        fragment.refreshList();
+
+        ft = getFragmentManager().beginTransaction();
+        ft.detach(fragment);
+        ft.attach(fragment);
+        ft.commit();
     }
 }
