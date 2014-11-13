@@ -2,6 +2,7 @@ package topcom.perguntaae;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -62,6 +64,7 @@ public class SubmitQuestionActivity extends Activity implements Button.OnClickLi
         EditText editTitle = (EditText)findViewById(R.id.editTitle);
         EditText editQuestion = (EditText)findViewById(R.id.editQuestion);
         Spinner spinnerCategories = (Spinner)findViewById(R.id.spinnerCategories);
+        String filename = editTitle.getText().toString().replaceAll(" ", "");
         int idx;
 
         idx = spinnerCategories.getSelectedItemPosition();
@@ -71,7 +74,11 @@ public class SubmitQuestionActivity extends Activity implements Button.OnClickLi
         //Save to file
         try
         {
-            FileOutputStream outputStream = openFileOutput(editTitle.toString().replaceAll(" ", ""), Context.MODE_PRIVATE);
+            //File path = new File(filename);
+            ///ContextWrapper cw = new ContextWrapper(getApplicationContext());
+            //File directory = cw.getDir("assets/questions", Context.MODE_PRIVATE);
+            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            //outputStream = new FileOutputStream(path);
             String sectionDiv = "_pa_section_", author = "newuser", score = "0";
             byte[] buffer = new byte[sectionDiv.length()], buffer2 = new byte[author.length()];
             buffer = sectionDiv.getBytes();

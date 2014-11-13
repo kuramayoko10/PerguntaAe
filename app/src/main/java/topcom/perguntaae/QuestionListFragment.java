@@ -72,7 +72,7 @@ public class QuestionListFragment extends Fragment
         ListView table = (ListView)getView().findViewById(R.id.listTable);
 
         try {
-            files = assets.list("questions");  //Read files from assets/questions dir
+            files = assets.list("");  //Read files from assets/questions dir
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,7 +84,7 @@ public class QuestionListFragment extends Fragment
             {
                 int size;
                 byte[] buffer;
-                String dir = "questions/";
+                String dir = "";
                 Question q;
 
                 input = assets.open(dir.concat(files[i]));

@@ -6,6 +6,14 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_texture">
 
+    <TextView
+        android:id="@+id/textUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#FF0000"
+    />
+
     <ImageButton
         android:id="@+id/button_rank"
         android:layout_width="wrap_content"

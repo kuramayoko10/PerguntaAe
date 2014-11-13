@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,15 +12,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
+//I had to add both GoogleApiClient and GooglePlayServicesClient interfaces... google guide suggests only the latter!!
 public class HomeActivity extends Activity implements QuestionListFragment.OnItemSelectedListener, ImageButton.OnClickListener
 {
     private ArrayList<Question> questionBank = new ArrayList<Question>();
     public static Activity activity;
-
     private FragmentTransaction ft;
 
     @Override
@@ -43,7 +44,6 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
         ImageButton buttonSubmit = (ImageButton)findViewById(R.id.button_submit);
         buttonSubmit.setOnClickListener(this);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -116,9 +116,9 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
 
         fragment.refreshList();
 
-        ft = getFragmentManager().beginTransaction();
-        ft.detach(fragment);
-        ft.attach(fragment);
-        ft.commit();
+        //ft = getFragmentManager().beginTransaction();
+        //ft.detach(fragment);
+        //ft.attach(fragment);
+        //ft.commitAllowingStateLoss();
     }
 }
