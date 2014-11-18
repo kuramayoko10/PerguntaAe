@@ -6,17 +6,6 @@
     android:orientation="vertical"
     android:id="@+id/list_layout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:text="Hot Questions"
-        android:textSize="9pt"
-        android:textStyle="bold"
-        android:textColor="#FF0000"
-    />
-
     <ListView
         android:id="@+id/listTable"
         android:layout_width="wrap_content"

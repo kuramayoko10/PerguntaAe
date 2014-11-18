@@ -3,6 +3,7 @@ package topcom.perguntaae;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.AssetManager;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,14 @@ import android.widget.ListView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
+import java.util.Vector;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by guicc on 10/25/14.
@@ -25,6 +33,10 @@ public class QuestionListFragment extends Fragment
     private OnItemSelectedListener listener;
     private ArrayList<Question> questionList;
     private ArrayAdapter<Question> itemAdapter;
+
+    private String category = "Filosofia";
+    private Vector columnNames;
+    private Vector data;
 
     public interface OnItemSelectedListener
     {
@@ -42,6 +54,9 @@ public class QuestionListFragment extends Fragment
                 listener.OnTableRowSelected(i);
             }
         });
+
+        columnNames = new Vector();
+        data = new Vector();
 
         return view;
     }
@@ -62,54 +77,31 @@ public class QuestionListFragment extends Fragment
         }
     }
 
-    public void setupView()
-    {
+    public void setupView() throws ExecutionException, InterruptedException {
         //Fill up the table
         AssetManager assets = getActivity().getAssets();
         String[] files = null, sections = null;
         String fileContent;
+        Vector data = new Vector();
+        ClientSend connect = new ClientSend("REFRESH home Filosofia");
 
         ListView table = (ListView)getView().findViewById(R.id.listTable);
 
-        try {
-            files = assets.list("");  //Read files from assets/questions dir
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        connect.execute();
+        connect.get(); //wait until it finishes
 
-        InputStream input;
-        try
+        data = connect.getData();
+
+        if(data != null)
         {
-            for(int i = 0; i < files.length; i++)
-            {
-                int size;
-                byte[] buffer;
-                String dir = "";
+            for (int i = 0; i < data.size(); i++) {
                 Question q;
+                String author;
+                Vector row = (Vector) data.get(i);
 
-                input = assets.open(dir.concat(files[i]));
-                size = input.available();
-                buffer = new byte[size];
-                input.read(buffer);
-                input.close();
-
-                fileContent = new String(buffer);
-                sections = fileContent.split("_pa_section_");
-
-                for(int k = 0; k < sections.length; k++)
-                    sections[k] = sections[k].replaceAll(System.getProperty("line.separator"), "");
-
-                if(sections.length > 0)
-                {
-                    q = new Question(sections[0], sections[1], sections[2], sections[3], Integer.parseInt(sections[4]));
-                    questionList.add(q);
-                }
-                else
-                    throw new IOException("Cannot find three sections on question read");
+                q = new Question((Integer)row.get(0), (Integer)row.get(1), (String) row.get(2), (String) row.get(3), (String) row.get(4), (String) row.get(5), (String) row.get(6), (Integer)row.get(7));
+                questionList.add(q);
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         //Notify only once after every question has been read

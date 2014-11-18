@@ -28,7 +28,8 @@ public class SubmitQuestionActivity extends Activity implements Button.OnClickLi
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_submit_question);
+        View inflatedView = getLayoutInflater().inflate(R.layout.activity_submit_question, null);
+        setContentView(inflatedView);
 
         //Set the back button on action bar
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,7 +70,7 @@ public class SubmitQuestionActivity extends Activity implements Button.OnClickLi
 
         idx = spinnerCategories.getSelectedItemPosition();
 
-        Question newQuestion = new Question(editTitle.getText().toString(), editQuestion.getText().toString(), "newuser", categories[idx], 0);
+        Question newQuestion = new Question(editTitle.getText().toString(), editQuestion.getText().toString(), "newuser", categories[idx]);
 
         //Save to file
         try

@@ -5,22 +5,28 @@ import java.util.ArrayList;
 
 public class Question
 {
-    public static final int nfields = 5;
+    public static final int nfields = 6;
 
+    private int id;
+    private int idu;
     private String title;
     private String content;
-    private String author;
     private String category;
-    private int score;
+    private String date;
+    private String author;
+    private int answerCount;
     private ArrayList<Answer> answers;
 
-    public Question(String title_, String content_, String author_, String category_, int score_)
+    public Question(int id_, int idu_, String title_, String content_, String category_, String date_, String author_, int answerCount_)
     {
+        id = id_;
+        idu = idu_;
         title = title_;
         content = content_;
-        author = author_;
         category = category_;
-        score = score_;
+        date = date_;
+        author = author_;
+        answerCount = answerCount_;
 
         answers = new ArrayList<Answer>();
     }
@@ -49,16 +55,9 @@ public class Question
     }
     public String getCategory()                { return category; }
 
-    public void setScore(int score_)
-    {
-        score = score_;
-    }
-    public int getScore()            { return score; }
-
-    public void addAnswer(Answer a)
-    {
-        answers.add(a);
-    }
+    public void addAnswer(Answer a)         { answers.add(a); }
+    public ArrayList<Answer> getAnswers()   { return answers; }
+    public int getAnswerCount()             { return answerCount; }
 
     public String[] getSections()
     {
@@ -67,11 +66,12 @@ public class Question
 
         sections[0] = title;
         sections[1] = content;
-        sections[2] = author;
-        sections[3] = category;
-        sections[4] = String.valueOf(score);
+        sections[2] = category;
+        sections[3] = date;
+        sections[4] = author;
+        sections[5] = String.valueOf(idu);
 
-        int k = 5;
+        int k = 6;
         for(int i = 0; i < answers.size(); i++)
         {
             String[] answerSections = answers.get(i).getSections();

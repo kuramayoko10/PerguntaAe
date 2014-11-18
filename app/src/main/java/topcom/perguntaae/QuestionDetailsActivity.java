@@ -19,30 +19,28 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
-/**
- * Created by guicc on 10/25/14.
- */
+
 public class QuestionDetailsActivity extends Activity implements Button.OnClickListener
 {
     private Integer idx;
     public static Activity activity;
     private ArrayAdapter<String[]> itemAdapter;
-    private ArrayList<String[]> answers;
+    private ArrayList<String[]> answerList;
+    private String[] details;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_details);
+        View inflatedView = getLayoutInflater().inflate(R.layout.activity_question_details, null);
+        setContentView(inflatedView);
 
         activity = this;
-        answers = new ArrayList<String[]>();
 
+        //ID of the question the user selected
         idx = (Integer)getIntent().getExtras().get("idx");
-
-        //Set the back button on action bar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(this);
@@ -52,61 +50,75 @@ public class QuestionDetailsActivity extends Activity implements Button.OnClickL
 
     public void setupView()
     {
-        String[] details = ((HomeActivity)HomeActivity.activity).getQuestionByIndex(idx.intValue()).getSections();
+        Question q = ((HomeActivity)HomeActivity.activity).getQuestionByIndex(idx.intValue());
+        details = q.getSections();
+
         ListView listAnswers = (ListView)findViewById(R.id.answer_list);
         TextView questionTitle = (TextView)findViewById(R.id.textQuestTitle);
         TextView questionContent = (TextView)findViewById(R.id.textQuestContent);
-        TextView questionAuthor = (TextView)findViewById(R.id.textQuestAuthor);
+        TextView questionAuthor = (TextView)findViewById(R.id.textQuestAuthor);     //exhibits name, score and date
 
         questionTitle.setText(details[0]);
         questionContent.setText(details[1]);
-        questionAuthor.setText(details[2]);
+
+        //TODO: Grab author's score... idu on details[5]
+        int score = 0;
+        String aux = details[3] + String.valueOf(score);
+        questionAuthor.setText(aux);
 
         int answerSize = details.length;
         int i = Question.nfields;
         while(i < answerSize)
         {
-            String[] content = new String[3];
-            content[0] = details[i++];
-            content[1] = details[i++];
-            content[2] = details[i++];
-            answers.add(content);
+            String[] content = new String[Answer.nfields];
+
+            for(int j = 0; j < Answer.nfields; j++)
+                content[j] = details[i++];
+
+            answerList.add(content);
         }
 
-        itemAdapter = new AnswerAdapter(getApplicationContext(), answers);
+        itemAdapter = new AnswerAdapter(getApplicationContext(), answerList);
         listAnswers.setAdapter(itemAdapter);
         itemAdapter.notifyDataSetChanged();
     }
 
     @Override
+    //Answer submission
     public void onClick(View view)
     {
         TextView title = (TextView)findViewById(R.id.textQuestTitle);
         EditText editAnswer = (EditText)findViewById(R.id.editAnswer);
-        String author = "answerUser", sectionDiv = "_pa_section_";
-        byte[] buffer = sectionDiv.getBytes();
-        Answer newAnswer = new Answer(editAnswer.getText().toString(), author, 0);
 
-        //Save to file
+        //Get User's name and id
+        UserProfile user = ((HomeActivity)HomeActivity.activity).getUser();
+
+        //Create an incomplete object Answer
+        Answer newAnswer = new Answer(editAnswer.getText().toString(), user.getName(), user.getID());
+
+        //Save to DB
+        ClientSend cs = new ClientSend("SUBMIT_ANSWER");
+
         try
         {
-            FileOutputStream outputStream = openFileOutput(title.toString().replaceAll(" ", ""), Context.MODE_APPEND);
-
-            outputStream.write(buffer);
-            outputStream.write(editAnswer.getText().toString().getBytes());
-            outputStream.write(buffer);
-            outputStream.write(author.getBytes());
-
-            ((HomeActivity)HomeActivity.activity).addAnswerToQuestion(idx.intValue(), newAnswer);
-
-        } catch (FileNotFoundException e) {
+            //Wait until the process ends
+            cs.get();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
         //Refresh
-        answers.add(newAnswer.getSections());
-        itemAdapter.notifyDataSetChanged();
+        if(cs.getResponse().equals("INSERTION_OK"))
+        {
+            answerList.add(newAnswer.getSections());
+            itemAdapter.notifyDataSetChanged();
+        }
+        else
+        {
+            //TODO: Pop a window warning the user
+
+        }
     }
 }

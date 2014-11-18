@@ -3,13 +3,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/question_bg">
 
     <LinearLayout
+        android:id="@+id/question_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/question_layout">
+        android:background="#FFFFFF"
+        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/textQuestTitle"
@@ -37,7 +40,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:gravity="right"
-            android:text="User who asked"
+            android:text="User (100) on Date"
             android:textSize="4pt"/>
     </LinearLayout>
 
@@ -46,7 +49,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/answer_list"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:padding="5dp">
     </ListView>
 
     <LinearLayout
@@ -61,16 +66,18 @@
             android:layout_marginTop="30dp"
             android:layout_marginLeft="15dp"
             android:text="Responda"
-            android:textSize="5pt"/>
+            android:textSize="6pt"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/editAnswer"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
             android:hint="Escreva aqui..."
-            android:textSize="4pt"/>
+            android:textSize="4pt"
+            android:background="#FFFFFF"/>
     </LinearLayout>
 
     <Button

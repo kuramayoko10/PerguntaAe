@@ -2,44 +2,72 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_texture">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="#FF0000"
-    />
+    <LinearLayout
+        android:id="@+id/navbar"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#E6E6E6"
+        android:gravity="center">
 
-    <ImageButton
-        android:id="@+id/button_rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/selector_rank_icon"/>
+        <!--Empty space to scale better the buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"></LinearLayout>
 
-    <ImageButton
-        android:id="@+id/button_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/button_rank"
-        android:src="@drawable/selector_profile_icon"/>
+        <ImageButton
+            android:id="@+id/bt_home"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bt_rank"
+        />
+        <ImageButton
+            android:id="@+id/bt_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bt_perfil"
+            />
+        <ImageButton
+            android:id="@+id/bt_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bt_fpergunta"
+            />
+        <ImageButton
+            android:id="@+id/bt_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bt_rank"
+            />
+        <ImageButton
+            android:id="@+id/bt_search"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bt_pesquisar"
+            />
 
-    <ImageButton
-        android:id="@+id/button_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/button_profile"
-        android:src="@drawable/selector_submit_icon"/>
+        <!--Empty space to scale better the buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"></LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@+id/navbar">
 
         <fragment
             android:id="@+id/listFragment"
@@ -47,7 +75,17 @@
             android:layout_height="match_parent"
             class="topcom.perguntaae.QuestionListFragment"
             tools:layout="@layout/fragment_question_list"/>
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/footer"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#E6E6E6"
+        android:text="rank: "
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true">
+    </Button>
 
 </RelativeLayout>

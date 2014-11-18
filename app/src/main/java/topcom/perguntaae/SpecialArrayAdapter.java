@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,30 +35,46 @@ public class SpecialArrayAdapter extends ArrayAdapter<Question>
         View view = inflater.inflate(R.layout.layout_tablerow, container, false);
 
         TextView textTitle = (TextView)view.findViewById(R.id.textQuestTitle);
-        TextView textCategory = (TextView)view.findViewById(R.id.textCategory);
-        TextView textScore = (TextView)view.findViewById(R.id.textScore);
+        ImageButton imgCategory = (ImageButton)view.findViewById(R.id.imgCategory);
+        TextView textAnsCount = (TextView)view.findViewById(R.id.textAnswerCount);
 
         Question q = values.get(position);
 
         String title = q.getTitle();
         String category = q.getCategory();
-        int score = q.getScore();
+        int ansCount = q.getAnswerCount();
 
         textTitle.setText(title);
-        textCategory.setText(category);
-        textScore.setText(String.valueOf(score));
+        textAnsCount.setText(String.valueOf(ansCount));
 
-        if(position % 2 == 0)
-        {
-            //transparent
-            //view.setBackgroundColor(context.getResources().getColor(R.color.even_row_color));
-            //view.invalidate();
-        }
-        else
-        {
-            view.setBackgroundColor(context.getResources().getColor(R.color.odd_row_color));
-            view.invalidate();
-        }
+        if(category.equals("Artes"))
+            imgCategory.setImageResource(R.drawable.artes);
+        else if(category.equals("Biologia"))
+            imgCategory.setImageResource(R.drawable.biologia);
+        else if(category.equals("Educação Física"))
+            imgCategory.setImageResource(R.drawable.edfisica);
+        else if(category.equals("Filosofia"))
+            imgCategory.setImageResource(R.drawable.filosofia);
+        else if(category.equals("Física"))
+            imgCategory.setImageResource(R.drawable.fisica);
+        else if(category.equals("Geografia"))
+            imgCategory.setImageResource(R.drawable.geografia);
+        else if(category.equals("História"))
+            imgCategory.setImageResource(R.drawable.historia);
+        else if(category.equals("Inglês"))
+            imgCategory.setImageResource(R.drawable.ingles);
+        else if(category.equals("Matemática"))
+            imgCategory.setImageResource(R.drawable.matematica);
+        else if(category.equals("Multidisciplinar"))
+            imgCategory.setImageResource(R.drawable.multi);
+        else if(category.equals("Língua Portuguesa"))
+            imgCategory.setImageResource(R.drawable.portugues);
+        else if(category.equals("Química"))
+            imgCategory.setImageResource(R.drawable.quimica);
+        else if(category.equals("Sociologia"))
+            imgCategory.setImageResource(R.drawable.sociologia);
+
+        view.setBackgroundColor(Color.WHITE);
 
         return view;
     }

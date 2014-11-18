@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <drawable name="transparent">#00ffffff</drawable>
-    <drawable name="evenColor">#ffffffff</drawable>
-    <drawable name="oddColor">#ffecf0ee</drawable>
     <color name="odd_row_color">#C0C0C0</color>
     <color name="even_row_color">#FFFFFF</color>
+    <color name="question_bg">#3D5B99</color>
 </resources>

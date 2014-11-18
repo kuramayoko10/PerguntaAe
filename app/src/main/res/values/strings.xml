@@ -2,6 +2,19 @@
 <resources>
 
     <string name="app_name">Pergunta.Ae</string>
-    <string name="action_settings">Configuracoes</string>
+
+    <string name="matArtes">Artes</string>
+    <string name="matBiologia">Biologia</string>
+    <string name="matEdFisica">Educação Física</string>
+    <string name="matFilosofia">Filosofia</string>
+    <string name="matFisica">Física</string>
+    <string name="matGeografia">Geografia</string>
+    <string name="matHistoria">História</string>
+    <string name="matIngles">Inglês</string>
+    <string name="matMatematica">Matemática</string>
+    <string name="matMulti">Multidisciplinar</string>
+    <string name="matPortugues">Língua Portuguesa</string>
+    <string name="matQuimica">Química</string>
+    <string name="matSociologia">Sociologia</string>
 
 </resources>
