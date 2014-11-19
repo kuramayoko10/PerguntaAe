@@ -67,10 +67,11 @@ public class SubmitQuestionActivity extends Activity implements Button.OnClickLi
         Spinner spinnerCategories = (Spinner)findViewById(R.id.spinnerCategories);
         String filename = editTitle.getText().toString().replaceAll(" ", "");
         int idx;
+        UserProfile user = ((HomeActivity)HomeActivity.activity).getUser();
 
         idx = spinnerCategories.getSelectedItemPosition();
 
-        Question newQuestion = new Question(editTitle.getText().toString(), editQuestion.getText().toString(), "newuser", categories[idx]);
+        Question newQuestion = new Question(editTitle.getText().toString(), editQuestion.getText().toString(), categories[idx], user.getName(), user.getID());
 
         //Save to file
         try

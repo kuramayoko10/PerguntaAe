@@ -17,7 +17,7 @@ public class Question
     private int answerCount;
     private ArrayList<Answer> answers;
 
-    public Question(int id_, int idu_, String title_, String content_, String category_, String date_, String author_, int answerCount_)
+    public Question(int id_, int idu_, String title_, String content_, String category_, String date_, String author_, long answerCount_)
     {
         id = id_;
         idu = idu_;
@@ -26,9 +26,18 @@ public class Question
         category = category_;
         date = date_;
         author = author_;
-        answerCount = answerCount_;
+        answerCount = (int)answerCount_;
 
         answers = new ArrayList<Answer>();
+    }
+
+    public Question(String title_, String content_, String category_, String author_, int idu_)
+    {
+        idu = idu_;
+        title = title_;
+        content = content_;
+        category = category_;
+        author = author_;
     }
 
     public void setTitle(String title_)

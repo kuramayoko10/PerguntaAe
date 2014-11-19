@@ -17,8 +17,8 @@ public class ClientSend extends AsyncTask<Void, Void, Void>
 {
     private Socket socket;
     private String serverAddr = "192.168.1.127";
-    private int port = 1024;
-    private ObjectOutputStream output;
+    private int port = 49152;
+    private DataOutputStream output;
     private ObjectInputStream input;
     private String message, received;
     private Vector data;
@@ -46,18 +46,20 @@ public class ClientSend extends AsyncTask<Void, Void, Void>
         {
             socket = new Socket(serverAddr, port);
             input = new ObjectInputStream(socket.getInputStream());
-            output = new ObjectOutputStream(socket.getOutputStream());
+            output = new DataOutputStream(socket.getOutputStream());
 
             //Send message
             output.writeInt(message.length());
             output.write(message.getBytes("UTF-8"));
-            output.writeObject(submitObj);  //DID: change output here to ObjectOutput and input to InputObject on server
+
+            //if(submitObj != null)
+            //    output.writeObject(submitObj);  //DID: change output here to ObjectOutput and input to InputObject on server
             Log.d("Debug", "Connection established");
 
-            //Wait response & save
-            byte[] buffer = new byte[1024];
+            byte[] buffer;  //antes new byte[1024];
             int count;
 
+            //Wait response
             while(input.available() < 4)
             {
                 ;
@@ -65,6 +67,7 @@ public class ClientSend extends AsyncTask<Void, Void, Void>
 
             count = input.readInt();
             Log.d("Debug", "count: " + count);
+            buffer = new byte[count+1];
             input.read(buffer, 0, count);
             received = new String(buffer, 0, count, Charset.forName("UTF-8"));
             Log.d("Debug", "Response: " + received);
@@ -80,8 +83,9 @@ public class ClientSend extends AsyncTask<Void, Void, Void>
                 for(int i = 0; i < aux.size(); i++)
                 {
                     Vector row = (Vector)aux.get(i);
-                    row.addElement(userNames.get(i));
-                    row.addElement(answerCount.get(i));
+                    Vector elem1 = (Vector)userNames.get(i), elem2 = (Vector)answerCount.get(i);
+                    row.addElement(elem1.get(0));
+                    row.addElement(elem2.get(0));
                     data.addElement(row);
                 }
                 success = true;
@@ -107,6 +111,12 @@ public class ClientSend extends AsyncTask<Void, Void, Void>
                     row.addElement(userNames.get(i));
                     data.addElement(row);
                 }
+                success = true;
+            }
+            else if(received.equals("USER_EXISTS"))
+            {
+                data = (Vector)input.readObject();
+                data = (Vector)data.elementAt(0);
                 success = true;
             }
 

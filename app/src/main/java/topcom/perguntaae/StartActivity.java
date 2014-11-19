@@ -55,7 +55,6 @@ public class StartActivity extends Activity implements GoogleApiClient.Connectio
         {
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(googleSignIn);
             String name = currentPerson.getDisplayName();
-            String nickname = currentPerson.getNickname();
             String email = Plus.AccountApi.getAccountName(googleSignIn);
             Person.Image photo = currentPerson.getImage();
             String birthday = currentPerson.getBirthday();
@@ -63,7 +62,6 @@ public class StartActivity extends Activity implements GoogleApiClient.Connectio
             //Start Home Activity
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             intent.putExtra("fullname", name);
-            intent.putExtra("nickname", nickname);
             intent.putExtra("email", email);
             intent.putExtra("bday", birthday);
             startActivity(intent);

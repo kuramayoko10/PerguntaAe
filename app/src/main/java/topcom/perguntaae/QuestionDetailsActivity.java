@@ -97,7 +97,7 @@ public class QuestionDetailsActivity extends Activity implements Button.OnClickL
         Answer newAnswer = new Answer(editAnswer.getText().toString(), user.getName(), user.getID());
 
         //Save to DB
-        ClientSend cs = new ClientSend("SUBMIT_ANSWER");
+        ClientSend cs = new ClientSend("SUBMIT_ANSWER ");
 
         try
         {

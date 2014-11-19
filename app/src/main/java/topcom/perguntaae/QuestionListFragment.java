@@ -21,13 +21,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Created by guicc on 10/25/14.
- */
+
 public class QuestionListFragment extends Fragment
 {
     private OnItemSelectedListener listener;
@@ -79,11 +79,9 @@ public class QuestionListFragment extends Fragment
 
     public void setupView() throws ExecutionException, InterruptedException {
         //Fill up the table
-        AssetManager assets = getActivity().getAssets();
-        String[] files = null, sections = null;
-        String fileContent;
+        UserProfile user = ((HomeActivity)HomeActivity.activity).getUser();
         Vector data = new Vector();
-        ClientSend connect = new ClientSend("REFRESH home Filosofia");
+        ClientSend connect = new ClientSend("REFRESH home " + user.getSelectedCategory() + " ");
 
         ListView table = (ListView)getView().findViewById(R.id.listTable);
 
@@ -98,8 +96,9 @@ public class QuestionListFragment extends Fragment
                 Question q;
                 String author;
                 Vector row = (Vector) data.get(i);
+                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 
-                q = new Question((Integer)row.get(0), (Integer)row.get(1), (String) row.get(2), (String) row.get(3), (String) row.get(4), (String) row.get(5), (String) row.get(6), (Integer)row.get(7));
+                q = new Question((Integer)row.get(0), (Integer)row.get(1), (String) row.get(2), (String) row.get(3), (String) row.get(4), (String) df.format(row.get(5)), (String) row.get(9), (Long)row.get(10));
                 questionList.add(q);
             }
         }

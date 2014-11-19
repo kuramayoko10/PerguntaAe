@@ -39,12 +39,12 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
 
         //Get user data from login and create user profile
         String fullname = (String)getIntent().getExtras().get("fullname");
-        String nickname = (String)getIntent().getExtras().get("nickname");
         String email = (String)getIntent().getExtras().get("email");
         String bday = (String)getIntent().getExtras().get("bday");
 
         //Use email as key to check if user is already on DB
-        ClientSend cs = new ClientSend("GET_USER", email);
+        ClientSend cs = new ClientSend("GET_USER " + email + " ");
+        cs.execute();
 
         try {
             //Wait until the query finishes
@@ -58,11 +58,22 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
         //Insert a new user entry on the DB if necessary
         if(cs.getResponse().equals("NOT_FOUND"))
         {
-            String insert = fullname + " " + nickname + " " + email;
-            cs = new ClientSend("INSERT_USER", insert);
+            String insert = fullname + " " + email;
+            cs = new ClientSend("INSERT_USER " + insert + " ");
+            cs.execute();
+
+            try {
+                //Wait until the query finishes
+                cs.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
+
         Vector userData = cs.getData();
-        user = new UserProfile((Integer)userData.elementAt(0), (String)userData.elementAt(1), (String)userData.elementAt(2), (String)userData.elementAt(3), (Integer)userData.elementAt(4));
+        user = new UserProfile((Integer)userData.elementAt(0), (String)userData.elementAt(1), (String)userData.elementAt(2), (Integer)userData.elementAt(8));
 
 
         //Assemble the fragment that deals with the question list and preview
@@ -102,6 +113,9 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
             startActivity(intent);
         }
     }
+
+
+
 
     public void addQuestionToBank(Question q)
     {
