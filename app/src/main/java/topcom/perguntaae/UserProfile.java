@@ -10,7 +10,7 @@ public class UserProfile
     private int score;
     private ArrayList<Question> myQuestions;
     private ArrayList<Answer> myAnswers;
-    private String selectedCategory = "Filosofia";
+    private String selectedCategory = "Biologia";
 
     public UserProfile(int id_, String fullname_, String email_, int score_)
     {

@@ -119,12 +119,11 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
 
 
 
-    public void addQuestionToBank(Question q)
-    {
-        questionBank.add(q);
-    }
+    public void addQuestionToBank(Question q)       { questionBank.add(q); }
 
     public ArrayList<Question> getQuestionBank()    { return questionBank; }
+
+    public void clearBank()                         { questionBank.clear(); }
 
     public void addAnswerToQuestion(int index, Answer a)
     {
@@ -203,9 +202,9 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
     {
         QuestionListFragment fragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.listFragment);
 
-        user.setCategory("Biologia");
+        user.setCategory("Filosofia");
         String selected = user.getSelectedCategory();
-        ClientSend cs = new ClientSend("REFRESH home " + selected);
+        ClientSend cs = new ClientSend("REFRESH home " + selected + " ");
         cs.execute();
         cs.finishQuery();
 

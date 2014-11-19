@@ -31,10 +31,10 @@ import java.util.concurrent.ExecutionException;
 public class QuestionListFragment extends Fragment
 {
     private OnItemSelectedListener listener;
-    private ArrayList<Question> questionList;
+    private ArrayList<Question> questionList = new ArrayList<Question>();
     private ArrayAdapter<Question> itemAdapter;
 
-    private String category = "Filosofia";
+    private String category = "Biologia";
     private Vector columnNames;
     private Vector data;
 
@@ -98,6 +98,7 @@ public class QuestionListFragment extends Fragment
     {
         ListView table = (ListView)getView().findViewById(R.id.listTable);
 
+        questionList.clear();
         for (int i = 0; i < data.size(); i++)
         {
             Question q;
