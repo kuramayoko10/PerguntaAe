@@ -27,6 +27,7 @@ public class UserProfile
     }
 
     public void setID(int id_)  {id = id_;}
+    public void setCategory(String category_)   {selectedCategory = category_;}
 
     public String getName()     {return fullname;}
     public int getID()          {return id;}

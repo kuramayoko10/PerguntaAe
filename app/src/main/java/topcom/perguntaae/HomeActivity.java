@@ -3,6 +3,7 @@ package topcom.perguntaae;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import java.util.concurrent.ExecutionException;
 public class HomeActivity extends Activity implements QuestionListFragment.OnItemSelectedListener, ImageButton.OnClickListener
 {
     private ArrayList<Question> questionBank = new ArrayList<Question>();
+    private Vector refreshData;
     private FragmentTransaction ft;
     private UserProfile user;
 
@@ -45,15 +47,7 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
         //Use email as key to check if user is already on DB
         ClientSend cs = new ClientSend("GET_USER " + email + " ");
         cs.execute();
-
-        try {
-            //Wait until the query finishes
-            cs.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        cs.finishQuery();
 
         //Insert a new user entry on the DB if necessary
         if(cs.getResponse().equals("NOT_FOUND"))
@@ -61,20 +55,28 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
             String insert = fullname + " " + email;
             cs = new ClientSend("INSERT_USER " + insert + " ");
             cs.execute();
-
-            try {
-                //Wait until the query finishes
-                cs.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+            cs.finishQuery();
         }
 
         Vector userData = cs.getData();
         user = new UserProfile((Integer)userData.elementAt(0), (String)userData.elementAt(1), (String)userData.elementAt(2), (Integer)userData.elementAt(8));
 
+        //
+        //NAVIGATION BAR
+        //
+        ImageButton btHome = (ImageButton)findViewById(R.id.bt_home);
+        ImageButton btProfile = (ImageButton)findViewById(R.id.bt_profile);
+        ImageButton btSubmitQ = (ImageButton)findViewById(R.id.bt_submit);
+        ImageButton btMyQuestions = (ImageButton)findViewById(R.id.bt_myQuestions);
+        ImageButton btRanking = (ImageButton)findViewById(R.id.bt_rank);
+        ImageButton btSearch = (ImageButton)findViewById(R.id.bt_search);
+
+        btHome.setOnClickListener(this);
+        btProfile.setOnClickListener(btProfileHandler);
+        btSubmitQ.setOnClickListener(btSubmitHandler);
+        btMyQuestions.setOnClickListener(btMyQuestionsHandler);
+        btRanking.setOnClickListener(btRankingHandler);
+        btSearch.setOnClickListener(btSearchHandler);
 
         //Assemble the fragment that deals with the question list and preview
         QuestionListFragment fragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.listFragment);
@@ -137,22 +139,78 @@ public class HomeActivity extends Activity implements QuestionListFragment.OnIte
     @Override
     public void onClick(View view)
     {
-        Intent intent = new Intent(getApplicationContext(), SubmitQuestionActivity.class);
-        startActivity(intent);
+        //Refresh QuestionList fragment
+        refreshList();
+
+        //Only if not singleTop
+        //Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        //startActivity(intent);
     }
 
-    public void refresh()
+    private View.OnClickListener btProfileHandler = new View.OnClickListener()
     {
-        QuestionListFragment fragment = (QuestionListFragment) getFragmentManager().findFragmentById(R.id.listFragment);
+        public void onClick(View view)
+        {
+            Context context = getApplicationContext();
+            Intent profileIntent = new Intent(context, ProfileActivity.class);
+            startActivity(profileIntent);
+        }
+    };
 
-        fragment.refreshList();
+    private View.OnClickListener btSubmitHandler = new View.OnClickListener()
+    {
+        public void onClick(View view)
+        {
+            Context context = getApplicationContext();
+            Intent profileIntent = new Intent(context, SubmitQuestionActivity.class);
+            startActivity(profileIntent);
+        }
+    };
 
-        //ft = getFragmentManager().beginTransaction();
-        //ft.detach(fragment);
-        //ft.attach(fragment);
-        //ft.commitAllowingStateLoss();
-    }
+    private View.OnClickListener btMyQuestionsHandler = new View.OnClickListener()
+    {
+        public void onClick(View view)
+        {
+            Context context = getApplicationContext();
+            Intent profileIntent = new Intent(context, HomeActivity.class); //TODO: View Questions and Answers activity
+            startActivity(profileIntent);
+        }
+    };
+
+    private View.OnClickListener btRankingHandler = new View.OnClickListener()
+    {
+        public void onClick(View view)
+        {
+            Context context = getApplicationContext();
+            Intent profileIntent = new Intent(context, RankingActivity.class);
+            startActivity(profileIntent);
+        }
+    };
+
+    private View.OnClickListener btSearchHandler = new View.OnClickListener()
+    {
+        public void onClick(View view)
+        {
+            Context context = getApplicationContext();
+            Intent profileIntent = new Intent(context, SearchActivity.class);
+            startActivity(profileIntent);
+        }
+    };
 
     public UserProfile getUser()        {return user;}
+
+    public void refreshList()
+    {
+        QuestionListFragment fragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.listFragment);
+
+        user.setCategory("Biologia");
+        String selected = user.getSelectedCategory();
+        ClientSend cs = new ClientSend("REFRESH home " + selected);
+        cs.execute();
+        cs.finishQuery();
+
+        refreshData = cs.getData();
+        fragment.refreshList(refreshData);
+    }
 
 }

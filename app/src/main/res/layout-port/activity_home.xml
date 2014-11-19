@@ -14,11 +14,11 @@
         android:background="#E6E6E6"
         android:gravity="center">
 
-        <!--Empty space to scale better the buttons -->
+        <!--Empty space to scale better the buttons
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1"></LinearLayout> -->
 
         <ImageButton
             android:id="@+id/bt_home"
@@ -42,6 +42,13 @@
             android:background="@drawable/bt_fpergunta"
             />
         <ImageButton
+            android:id="@+id/bt_myQuestions"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bt_vpergunta_sn"
+            />
+        <ImageButton
             android:id="@+id/bt_rank"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -56,11 +63,6 @@
             android:background="@drawable/bt_pesquisar"
             />
 
-        <!--Empty space to scale better the buttons -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"></LinearLayout>
     </LinearLayout>
 
     <LinearLayout

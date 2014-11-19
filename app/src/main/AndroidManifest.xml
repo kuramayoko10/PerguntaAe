@@ -58,6 +58,24 @@
             android:parentActivityName=".HomeActivity">
         </activity>
 
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Profile"
+            android:parentActivityName=".HomeActivity">
+        </activity>
+
+        <activity
+            android:name=".RankingActivity"
+            android:label="Ranking"
+            android:parentActivityName=".HomeActivity">
+        </activity>
+
+        <activity
+            android:name=".SearchActivity"
+            android:label="Search"
+            android:parentActivityName=".HomeActivity">
+        </activity>
+
     </application>
 
 </manifest>

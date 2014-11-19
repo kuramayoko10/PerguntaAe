@@ -83,34 +83,35 @@ public class QuestionListFragment extends Fragment
         Vector data = new Vector();
         ClientSend connect = new ClientSend("REFRESH home " + user.getSelectedCategory() + " ");
 
-        ListView table = (ListView)getView().findViewById(R.id.listTable);
-
         connect.execute();
-        connect.get(); //wait until it finishes
+        connect.finishQuery(); //wait until it finishes
 
         data = connect.getData();
 
         if(data != null)
         {
-            for (int i = 0; i < data.size(); i++) {
-                Question q;
-                String author;
-                Vector row = (Vector) data.get(i);
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+            refreshList(data);
+        }
+    }
 
-                q = new Question((Integer)row.get(0), (Integer)row.get(1), (String) row.get(2), (String) row.get(3), (String) row.get(4), (String) df.format(row.get(5)), (String) row.get(9), (Long)row.get(10));
-                questionList.add(q);
-            }
+    public void refreshList(Vector data)
+    {
+        ListView table = (ListView)getView().findViewById(R.id.listTable);
+
+        for (int i = 0; i < data.size(); i++)
+        {
+            Question q;
+            String author;
+            Vector row = (Vector) data.get(i);
+            DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+
+            q = new Question((Integer)row.get(0), (Integer)row.get(1), (String) row.get(2), (String) row.get(3), (String) row.get(4), (String) df.format(row.get(5)), (String) row.get(9), (Long)row.get(10));
+            questionList.add(q);
         }
 
         //Notify only once after every question has been read
         itemAdapter = new SpecialArrayAdapter(getActivity().getApplicationContext(), questionList);
         table.setAdapter(itemAdapter);
-        itemAdapter.notifyDataSetChanged();
-    }
-
-    public void refreshList()
-    {
         itemAdapter.notifyDataSetChanged();
     }
 }

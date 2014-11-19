@@ -11,12 +11,14 @@ import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
 
 
 public class ClientSend extends AsyncTask<Void, Void, Void>
 {
     private Socket socket;
-    private String serverAddr = "192.168.1.127";
+    //private String serverAddr = "192.168.1.127";
+    private String serverAddr = "172.26.5.179";
     private int port = 49152;
     private DataOutputStream output;
     private ObjectInputStream input;
@@ -136,6 +138,18 @@ public class ClientSend extends AsyncTask<Void, Void, Void>
         }
 
         return null;
+    }
+
+    public void finishQuery()
+    {
+        try {
+            //Wait until the query finishes
+            this.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public Vector getData()         { return data; }

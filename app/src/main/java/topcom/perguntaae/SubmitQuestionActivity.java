@@ -31,9 +31,6 @@ public class SubmitQuestionActivity extends Activity implements Button.OnClickLi
         View inflatedView = getLayoutInflater().inflate(R.layout.activity_submit_question, null);
         setContentView(inflatedView);
 
-        //Set the back button on action bar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         Button buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(this);
 
@@ -113,7 +110,7 @@ public class SubmitQuestionActivity extends Activity implements Button.OnClickLi
 
         //Refresh
         ((HomeActivity)HomeActivity.activity).addQuestionToBank(newQuestion);
-        ((HomeActivity)HomeActivity.activity).refresh();
+        ((HomeActivity)HomeActivity.activity).refreshList();
 
         //Go back to the home activity
         Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
